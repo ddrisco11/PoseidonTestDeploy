@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Tracker</title>
+</head>
+<body>
+    <h1>Upload Video and Data Files</h1>
+    <form id="upload-form">
+        <label for="video-file">Video File:</label>
+        <input type="file" id="video-file" name="video-file" required><br><br>
+
+        <label for="location-file">Location Data File:</label>
+        <input type="file" id="location-file" name="location-file" required><br><br>
+
+        <label for="model-file">Model Weights File:</label>
+        <input type="file" id="model-file" name="model-file" required><br><br>
+
+        <button type="submit">Upload and Process</button>
+    </form>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append('video-file', document.getElementById('video-file').files[0]);
+            formData.append('location-file', document.getElementById('location-file').files[0]);
+            formData.append('model-file', document.getElementById('model-file').files[0]);
+
+            fetch('https://your-backend-server-url/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Processing Complete');
+            }).catch(error => {
+                console.error(error);
+                alert('An error occurred');
+            });
+        });
+    </script>
+</body>
+</html>
